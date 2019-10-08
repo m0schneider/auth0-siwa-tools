@@ -76,6 +76,7 @@ if (configFilePath) {
 
                     console.log('\n');
                     console.log(chalk.cyan(`Executing token exchange using ${chalk.yellow(strategy)}`));
+
                     tokenExchange(strategy, config, code, (err, res, body) => {
                         console.log(chalk.cyan('Token exchange completed'));
                         if (err) {
@@ -158,16 +159,29 @@ function sendAuth0Request(config, code, cb) {
 }
 
 function sendAppleRequest(config, code, cb) {
-    request.post(
-        {
-            url: 'https://appleid.apple.com/auth/token',
-            form: {
-                client_id: config.clientId,
-                client_secret: config.clientSecret,
-                grant_type: "authorization_code",
-                code: code
-            }
-        }, cb);
+
+    inquirer.prompt([{
+        name: 'isWebFlow',
+        message: 'Was this code obtained via Web Flow?',
+        type: 'confirm'
+    }]).then(answer => {
+        let form = {
+            client_id: config.clientId,
+            client_secret: config.clientSecret,
+            grant_type: "authorization_code",
+            code: code
+        }
+    
+        if (answer.isWebFlow) {
+            form.redirect_uri = config.redirect_uri;
+        }
+    
+        request.post(
+            {
+                url: 'https://appleid.apple.com/auth/token',
+                form: form
+            }, cb);
+    })
 }
 
 function errorAndExit(err) {
