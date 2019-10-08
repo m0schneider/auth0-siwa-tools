@@ -4,6 +4,8 @@ const jsonwebtoken = require('jsonwebtoken');
 const inquirer = require('inquirer');
 const request = require('request');
 const chalk = require('chalk');
+const url = require('url');
+const querystring = require('querystring');
 
 const configFilePath = process.argv[2];
 
@@ -61,6 +63,14 @@ if (configFilePath) {
                 }
 
                 let strategy = answer.operation;
+
+                if (strategy === 'txApple') {
+                    if(config.redirect_uri) {
+                        console.log(chalk.green(getAppleAuthorizeURL(config)));
+                    } else {
+                        console.log(chalk.orange('If you want the Apple Authorize URL to be generated, define the redirect_uri in the config file'));
+                    }
+                }
 
                 console.log('\n');
                 inquirer.prompt([{
@@ -182,6 +192,22 @@ function sendAppleRequest(config, code, cb) {
                 form: form
             }, cb);
     })
+}
+
+function getAppleAuthorizeURL(config) {
+    let authorizeUrl = new url.URL('https://appleid.apple.com/auth/authorize');
+
+    let queryObj = {
+        client_id: config.clientId,
+        redirect_uri: config.redirect_uri,
+        response_type: 'code',
+        scope: 'email name',
+        response_mode: 'form_post' // code can't be returned via other modes
+    }
+
+    authorizeUrl.search = querystring.stringify(queryObj);
+
+    return authorizeUrl.href;
 }
 
 function errorAndExit(err) {
