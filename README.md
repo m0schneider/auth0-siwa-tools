@@ -1,5 +1,8 @@
 # Sign In with Apple Tools
 
+## Setting thins up
+As usual: `npm install`.
+
 ## Config file
 
 1. Copy `.env.example` to `whatever.env`
