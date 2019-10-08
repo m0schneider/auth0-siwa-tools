@@ -25,3 +25,7 @@ To obtain codes to test the token exchange flow:
 5. Add a `print(authCode);` statement to log the code obtained by the app after the Sign In with Apple is successful
 6. Run the emulator, click "Sign In with Apple", follow the authentication flow
 7. Once the flow completes, check XCode's logger to get your code
+
+## Example output
+
+![Example output](https://user-images.githubusercontent.com/844344/66361085-46626180-e932-11e9-9055-5dec8f3ad36a.png)
