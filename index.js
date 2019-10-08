@@ -68,7 +68,7 @@ if (configFilePath) {
                     if(config.redirect_uri) {
                         console.log(chalk.green(getAppleAuthorizeURL(config)));
                     } else {
-                        console.log(chalk.orange('If you want the Apple Authorize URL to be generated, define the redirect_uri in the config file'));
+                        console.log(chalk.yellow('If you want the Apple Authorize URL to be generated, define the redirect_uri in the config file'));
                     }
                 }
 
