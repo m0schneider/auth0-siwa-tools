@@ -1,0 +1,19 @@
+{
+  "name": "siwa-client-secret-gen",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "dotenv": "^8.1.0",
+    "inquirer": "^7.0.0",
+    "jsonwebtoken": "5.7.0",
+    "request": "^2.88.0"
+  }
+}
